@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
                     <div>
                         <div className="flex justify-center md:justify-start items-center gap-4 mb-4">
-                            <img src="/Ava.png" alt="آوای نهاوند لوگو" className="h-۱۲ w-auto logo-color-filter" />
+                            <img src="/Ava.png" alt="آوای نهاوند لوگو" style={{ height: '24px' }} className="h-۱۲ w-auto logo-color-filter" />
                             <span className="text-lg font-semibold text-white">آوای نهاوند</span>
                         </div>
                         <p className="text-sm">راهکارهای جامع کامپیوتری و فناوری اطلاعات. همراه شما در مسیر دیجیتالی شدن.</p>
