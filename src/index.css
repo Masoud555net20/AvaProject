@@ -62,3 +62,19 @@
     @apply px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4;
   }
 }
+
+/* Marquee animation for RTL (left to right scroll) */
+@layer utilities {
+  .animate-marquee-reverse {
+    animation: marquee-reverse 20s linear infinite;
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
