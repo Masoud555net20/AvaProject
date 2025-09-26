@@ -43,7 +43,7 @@ const testimonials: Testimonial[] = [
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => (
     <div className="bg-slate-800 p-8 rounded-lg shadow-lg flex flex-col items-center text-center">
-        <img src={testimonial.image} alt={testimonial.author} className="w-24 h-24 rounded-full mb-6 border-4 border-cyan-500" />
+        <img src={testimonial.image} alt={testimonial.author} loading="lazy" className="w-24 h-24 rounded-full mb-6 border-4 border-cyan-500" />
         <p className="text-gray-300 italic mb-6">"{testimonial.quote}"</p>
         <div className="mt-auto">
             <h4 className="font-bold text-white text-lg">{testimonial.author}</h4>

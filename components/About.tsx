@@ -28,6 +28,7 @@ const About: React.FC = () => {
               <img 
                 src="/About.JPG" 
                 alt="تیم آوای نهاوند" 
+                loading="lazy"
                 className="rounded-lg shadow-xl w-48 h-auto object-cover border-4 border-cyan-400 ring-4 ring-cyan-400/20 brightness-110 contrast-110 saturate-110 hover:scale-105 transition-transform duration-300 cursor-pointer"
               />
             </div>

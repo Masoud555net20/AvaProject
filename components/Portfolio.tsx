@@ -26,7 +26,7 @@ const Portfolio: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {portfolioItems.map((item, index) => (
                         <div key={index} className="group relative overflow-hidden rounded-lg shadow-lg">
-                            <img src={item.image} alt={item.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
+                            <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" />
                             <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                                 <span className="text-sm text-cyan-400 font-semibold">{item.category}</span>
                                 <h3 className="text-xl font-bold text-white mt-1">{item.title}</h3>
