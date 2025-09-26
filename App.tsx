@@ -12,13 +12,15 @@ import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import OrderPage from './pages/OrderPage';
 import Marquee from './components/Marquee';
+import AnimatedWaves from './components/AnimatedWaves'; // Import the new component
 
 const HomePage: React.FC = () => {
   return (
-    <div className="bg-slate-900 text-gray-200 antialiased">
+    <div className="relative min-h-screen bg-gradient-to-br from-gray-900 to-slate-800 text-gray-200 antialiased">
+      <AnimatedWaves /> {/* Add the animated waves component here */}
       <Header />
       <Marquee />
-      <main>
+      <main className="relative z-10"> {/* Ensure main content is above waves */}
         <Hero />
         <About />
         <Services />

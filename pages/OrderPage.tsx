@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { servicesList, UploadIcon } from '../components/data';
-import { CONTACT_INFO, SOCIAL_MEDIA_URLS } from '../constants';
+import { servicesList, UploadIcon } from '@/components/data';
+import { CONTACT_INFO, SOCIAL_MEDIA_URLS } from '@/constants';
 
 const initialFormData = {
     name: '',
@@ -44,35 +44,66 @@ const OrderPage: React.FC = () => {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        
-        if (parseInt(formData.captcha, 10) !== captcha.num1 + captcha.num2) {
-            alert('کد امنیتی وارد شده صحیح نیست. لطفاً دوباره تلاش کنید.');
-            generateCaptcha();
-            setFormData({ ...formData, captcha: '' });
-            return;
-        }
-
-        console.log("Form submitted:", {
-            ...formData,
-            file: formData.file?.name
-        });
-
-        setIsSubmitted(true);
-        setFormData(initialFormData);
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    if (parseInt(formData.captcha, 10) !== captcha.num1 + captcha.num2) {
+        alert('کد امنیتی وارد شده صحیح نیست. لطفاً دوباره تلاش کنید.');
         generateCaptcha();
-        
-        setTimeout(() => {
-            setIsSubmitted(false);
-            navigate('/');
-        }, 5000);
-    };
+        setFormData({ ...formData, captcha: '' });
+        return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('phone', formData.phone);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('service', formData.service);
+    formDataToSend.append('description', formData.description);
+    formDataToSend.append('urgency', formData.urgency);
+    formDataToSend.append('address', formData.address);
+    formDataToSend.append('contactMethod', formData.contactMethod);
+    if (formData.file) {
+        formDataToSend.append('file', formData.file);
+    }
+
+    try {
+        const response = await fetch('http://localhost:3001/api/send-order', {
+            method: 'POST',
+            body: formDataToSend
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            setIsSubmitted(true);
+            setFormData(initialFormData);
+            generateCaptcha();
+            
+            setTimeout(() => {
+                setIsSubmitted(false);
+                navigate('/');
+            }, 5000);
+        } else {
+            alert('خطا در ارسال سفارش. لطفاً دوباره تلاش کنید.');
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.');
+    }
+};
+
+    const inputClass = "w-full bg-gray-800 border border-gray-700 rounded-lg py-3 px-4 text-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300";
+    const selectClass = "w-full bg-gray-800 border border-gray-700 rounded-lg py-3 px-4 text-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300";
+    const textareaClass = "w-full bg-gray-800 border border-gray-700 rounded-lg py-3 px-4 text-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 resize-none";
+    const fileLabelClass = "w-full bg-gray-800 border border-gray-700 rounded-lg py-3 px-4 text-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer hover:bg-gray-700";
+    const captchaInputClass = "w-full md:w-32 bg-gray-900 border border-gray-700 rounded-lg py-2 px-3 text-gray-200 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 text-center";
+    const buttonClass = "flex-1 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/30";
+    const cancelButtonClass = "flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105";
 
     return (
-        <div className="min-h-screen bg-slate-900 text-gray-200">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-slate-800 text-gray-200">
             {/* Header */}
-            <header className="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-cyan-500/10">
+            <header className="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-cyan-500/10">
                 <div className="container mx-auto px-6 py-3 flex justify-between items-center">
                     <button 
                         onClick={() => navigate('/')} 
@@ -94,17 +125,17 @@ const OrderPage: React.FC = () => {
             <main className="py-20">
                 <div className="container mx-auto px-6">
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                            <span className="text-cyan-400">ثبت سفارش آنلاین</span>
+                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+                            <span className="text-cyan-500 font-black">ثبت سفارش آنلاین</span>
                         </h1>
                         <p className="text-xl text-gray-400 max-w-2xl mx-auto">
                             برای دریافت مشاوره یا ثبت سفارش، فرم زیر را تکمیل کنید. کارشناسان ما به زودی با شما تماس خواهند گرفت.
                         </p>
                     </div>
 
-                    <div className="max-w-2xl mx-auto">
+                    <div className="max-w-4xl mx-auto">
                         {isSubmitted ? (
-                            <div className="bg-green-500/20 border border-green-500/30 text-green-300 p-6 rounded-xl text-center">
+                            <div className="bg-green-500/20 border border-green-500/30 text-green-300 p-8 rounded-xl text-center">
                                 <div className="text-5xl mb-4">✅</div>
                                 <h2 className="text-2xl font-bold mb-4">سفارش شما با موفقیت ثبت شد!</h2>
                                 <p className="text-base mb-4">
@@ -115,12 +146,12 @@ const OrderPage: React.FC = () => {
                                 </p>
                             </div>
                         ) : (
-                            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-2xl shadow-cyan-500/10 border border-slate-700 p-6">
-                                <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-2xl shadow-blue-500/10 border border-slate-700 p-10">
+                                <form onSubmit={handleSubmit} className="space-y-6">
                                     {/* Personal Information */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                                            <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-3">
                                                 نام و نام خانوادگی <span className="text-red-500">*</span>
                                             </label>
                                             <input 
@@ -130,12 +161,12 @@ const OrderPage: React.FC = () => {
                                                 required 
                                                 value={formData.name} 
                                                 onChange={handleChange} 
-                                                className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                                                className={inputClass}
                                                 placeholder="نام و نام خانوادگی"
                                             />
                                         </div>
                                         <div>
-                                            <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
+                                            <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-3">
                                                 شماره تماس <span className="text-red-500">*</span>
                                             </label>
                                             <input 
@@ -145,14 +176,14 @@ const OrderPage: React.FC = () => {
                                                 required 
                                                 value={formData.phone} 
                                                 onChange={handleChange} 
-                                                className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                                                className={inputClass}
                                                 placeholder="09123456789"
                                             />
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                                        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-3">
                                             ایمیل (اختیاری)
                                         </label>
                                         <input 
@@ -161,13 +192,13 @@ const OrderPage: React.FC = () => {
                                             id="email" 
                                             value={formData.email} 
                                             onChange={handleChange} 
-                                            className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                                            className={inputClass}
                                             placeholder="example@email.com"
                                         />
                                     </div>
                                     
                                     <div>
-                                        <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">
+                                        <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-3">
                                             نوع خدمت مورد نیاز <span className="text-red-500">*</span>
                                         </label>
                                         <select 
@@ -176,7 +207,7 @@ const OrderPage: React.FC = () => {
                                             required 
                                             value={formData.service} 
                                             onChange={handleChange} 
-                                            className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                                            className={selectClass}
                                         >
                                             <option value="">انتخاب کنید...</option>
                                             {servicesList.map(s => <option key={s.title} value={s.title}>{s.title}</option>)}
@@ -185,22 +216,22 @@ const OrderPage: React.FC = () => {
                                     </div>
 
                                     <div>
-                                        <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-2">
+                                        <label htmlFor="description" className="block text-sm font-medium text-gray-300 mb-3">
                                             توضیحات کامل درباره نیاز یا سفارش
                                         </label>
                                         <textarea 
                                             name="description" 
                                             id="description" 
-                                            rows={4} 
+                                            rows={5} 
                                             value={formData.description} 
                                             onChange={handleChange} 
-                                            className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 resize-none"
-                                            placeholder="توضیحات کاملی از نیاز یا سفارش خود ارائه دهید..."
+                                            className={textareaClass}
+                                            placeholder="توضیحات کامل درباره نیاز یا سفارش خود را اینجا بنویسید..."
                                         ></textarea>
                                     </div>
 
                                     <div>
-                                        <label htmlFor="address" className="block text-sm font-medium text-gray-300 mb-2">
+                                        <label htmlFor="address" className="block text-sm font-medium text-gray-300 mb-3">
                                             آدرس دقیق (برای خدمات حضوری یا ارسال)
                                         </label>
                                         <input 
@@ -209,15 +240,15 @@ const OrderPage: React.FC = () => {
                                             id="address" 
                                             value={formData.address} 
                                             onChange={handleChange} 
-                                            className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                                            className={inputClass}
                                             placeholder="آدرس کامل خود را وارد کنید"
                                         />
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <label className="block text-sm font-medium text-gray-300 mb-2">زمان مورد نظر</label>
-                                            <div className="flex gap-4 bg-slate-700 border border-slate-600 rounded-lg p-3">
+                                            <label className="block text-sm font-medium text-gray-300 mb-3">زمان مورد نظر</label>
+                                            <div className="flex gap-4 bg-slate-700 border border-slate-600 rounded-lg p-4">
                                                 <label className="flex items-center gap-2 text-white cursor-pointer">
                                                     <input 
                                                         type="radio" 
@@ -243,7 +274,7 @@ const OrderPage: React.FC = () => {
                                             </div>
                                         </div>
                                         <div>
-                                            <label htmlFor="contactMethod" className="block text-sm font-medium text-gray-300 mb-2">
+                                            <label htmlFor="contactMethod" className="block text-sm font-medium text-gray-300 mb-3">
                                                 روش تماس ترجیحی
                                             </label>
                                             <select 
@@ -251,7 +282,7 @@ const OrderPage: React.FC = () => {
                                                 id="contactMethod" 
                                                 value={formData.contactMethod} 
                                                 onChange={handleChange} 
-                                                className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300"
+                                                className={selectClass}
                                             >
                                                 <option value="phone">تلفن</option>
                                                 <option value="sms">پیامک</option>
@@ -262,12 +293,12 @@ const OrderPage: React.FC = () => {
                                     </div>
                                     
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                                        <label className="block text-sm font-medium text-gray-300 mb-3">
                                             بارگذاری فایل (اختیاری)
                                         </label>
                                         <label 
                                             htmlFor="file" 
-                                            className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 px-4 text-gray-400 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer hover:bg-slate-600"
+                                            className={fileLabelClass}
                                         >
                                             <UploadIcon className="w-5 h-5" />
                                             <span>{formData.file ? formData.file.name : "یک فایل را انتخاب کنید..."}</span>
@@ -281,7 +312,7 @@ const OrderPage: React.FC = () => {
                                         />
                                     </div>
 
-                                    <div className="bg-slate-700/50 p-4 rounded-lg flex flex-col md:flex-row items-center justify-between gap-4">
+                                    <div className="bg-slate-700/50 p-5 rounded-lg flex flex-col md:flex-row items-center justify-between gap-4">
                                         <label htmlFor="captcha" className="block text-sm font-medium text-gray-300">
                                             کد امنیتی: حاصل {captcha.num1} + {captcha.num2} چند می‌شود؟ <span className="text-red-500">*</span>
                                         </label>
@@ -292,21 +323,21 @@ const OrderPage: React.FC = () => {
                                             required 
                                             value={formData.captcha} 
                                             onChange={handleChange} 
-                                            className="w-full md:w-32 bg-slate-900 border border-slate-600 rounded-lg py-2 px-4 text-white focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 transition-all duration-300 text-center"
+                                            className={captchaInputClass}
                                         />
                                     </div>
 
-                                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                                    <div className="flex flex-col sm:flex-row gap-6 pt-4">
                                         <button 
                                             type="submit" 
-                                            className="flex-1 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg shadow-cyan-500/30"
+                                            className={buttonClass}
                                         >
                                             ثبت سفارش
                                         </button>
                                         <button 
                                             type="button" 
                                             onClick={() => navigate('/')}
-                                            className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
+                                            className={cancelButtonClass}
                                         >
                                             انصراف
                                         </button>
@@ -401,7 +432,7 @@ const OrderPage: React.FC = () => {
                                 <h4 className="text-cyan-400 text-sm font-semibold mb-2 text-center animate-pulse">موقعیت مکانی</h4>
                                 <div className="rounded-lg overflow-hidden shadow-lg border border-slate-600 transform transition-all duration-300 hover:scale-105">
                                     <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52945.72898926956!2d48.34789886301382!3d34.19504501758652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fee471df42f1d97%3A0x6b24de81de98e3b!2sNahavand%2C%20Hamadan%20Province%2C%20Iran!5e0!3m2!1sen!2s!4v1685000000000!5m2!1sen!2s"
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3297.508959151826!2d48.37682531522082!3d34.19504508055028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fee471df42f1d97%3A0x6b24de81de98e3b!2sNahavand%2C%20Hamedan%20Province%2C%20Iran!5e0!3m2!1sen!2s!4v1628882000000"
                                         width="100%"
                                         height="200"
                                         style={{ border: 0 }}

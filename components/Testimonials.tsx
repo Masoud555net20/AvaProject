@@ -21,6 +21,24 @@ const testimonials: Testimonial[] = [
         title: "گرافیست",
         image: "https://picsum.photos/100/100?random=22"
     },
+    {
+        quote: "پروژه دانشجویی برنامه‌نویسی رو به موقع و با کیفیت بالا تحویل دادن. نمره عالی گرفتم!",
+        author: "سارا کریمی",
+        title: "دانشجوی کارشناسی ارشد",
+        image: "https://picsum.photos/100/100?random=23"
+    },
+    {
+        quote: "تعمیرات سخت‌افزاری کامپیوترم رو با گارانتی انجام دادن. قیمت مناسب و خدمات عالی.",
+        author: "حسن نوری",
+        title: "کارمند",
+        image: "https://picsum.photos/100/100?random=24"
+    },
+    {
+        quote: "طراحی سایت شرکتی ما رو با تمرکز بر سئو و موبایل انجام دادن. ترافیک سایت افزایش پیدا کرد.",
+        author: "فاطمه رضوی",
+        title: "مدیر IT",
+        image: "https://picsum.photos/100/100?random=25"
+    },
 ];
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => (
@@ -42,7 +60,7 @@ const Testimonials: React.FC = () => {
                     <h2 className="text-3xl font-bold text-white">نظرات مشتریان</h2>
                     <p className="text-gray-400 mt-4">اعتماد شما، بزرگترین سرمایه ماست</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {testimonials.map((testimonial) => (
                         <TestimonialCard key={testimonial.author} testimonial={testimonial} />
                     ))}

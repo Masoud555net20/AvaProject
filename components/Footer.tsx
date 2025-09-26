@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { SOCIAL_MEDIA_URLS, CONTACT_INFO } from '../constants';
 import type { SocialLink } from '../types';
@@ -33,13 +32,13 @@ const socialLinks: SocialLink[] = [
 const Footer: React.FC = () => {
     const currentYear = new Date().getFullYear();
     return (
-        <footer className="bg-slate-950 text-gray-400">
+        <footer className="bg-gradient-to-r from-slate-950 to-cyan-950 text-gray-400"> {/* Changed to darker gradient for subtle glow effect */}
             <div className="container mx-auto px-6 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-right">
                     <div>
                         <div className="flex justify-center md:justify-start items-center gap-4 mb-4">
-                            <img src="/Ava.png" alt="آوای نهاوند لوگو" style={{ height: '24px' }} className="h-۱۲ w-auto logo-color-filter" />
-                            <span className="text-lg font-semibold text-white">آوای نهاوند</span>
+                            <img src="/Ava.png" alt="آوای نهاوند لوگو" className="h-10 md:h-16 w-auto logo-color-filter" />
+                            <h3 className="text-cyan-300 text-2xl font-bold">آوای نهاوند</h3> {/* Changed to cyan-300 for better contrast */}
                         </div>
                         <p className="text-sm">راهکارهای جامع کامپیوتری و فناوری اطلاعات. همراه شما در مسیر دیجیتالی شدن.</p>
                         <div className="flex justify-center md:justify-start mt-6 space-x-reverse space-x-4">
