@@ -68,7 +68,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     }
 
     try {
-        const response = await fetch('http://localhost:3001/api/send-order', {
+        const response = await fetch('/api/send-order', {
             method: 'POST',
             body: formDataToSend
         });
