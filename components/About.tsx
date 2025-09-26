@@ -33,7 +33,7 @@ const About: React.FC = () => {
                 src="/About.JPG" 
                 alt="تیم آوای نهاوند" 
                 loading="lazy"
-                className="rounded-full shadow-xl w-48 h-48 object-cover border-4 border-cyan-400 ring-4 ring-cyan-400/20 brightness-110 contrast-110 saturate-110 hover:scale-105 transition-transform duration-300 cursor-pointer"
+                className="rounded-full shadow-xl w-64 h-64 object-cover border-4 border-cyan-400 ring-4 ring-cyan-400/20 brightness-110 contrast-110 saturate-110 hover:scale-105 transition-transform duration-300 cursor-pointer"
               />
             </div>
           </div>
