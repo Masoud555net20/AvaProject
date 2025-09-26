@@ -110,7 +110,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                     >
                         <img src="./Ava.png?v=2" alt="آوای نهاوند لوگو" className="h-12 w-auto logo-color-filter" />
-                        <span className="text-xl font-bold text-white tracking-wider">آوای نهاوند</span>
                     </button>
                     <button 
                         onClick={() => navigate('/')}
