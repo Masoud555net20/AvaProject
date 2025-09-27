@@ -22,7 +22,7 @@ const Hero: React.FC = () => {
     }, []);
 
     return (
-        <section id="home" className="relative h-screen flex items-start justify-center text-center bg-cover bg-center bg-fixed overflow-hidden pt-24 md:pt-32">
+        <section id="home" className="relative min-h-screen flex items-center justify-center text-center bg-cover bg-center bg-fixed overflow-hidden pt-24 md:pt-32">
             {/* Background Image Slideshow */}
             {images.map((image, index) => (
                 <div
@@ -45,18 +45,18 @@ const Hero: React.FC = () => {
                     }}
                 ></div>
             </div>
-            <div className="relative z-10 p-6">
-                <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-3 leading-tight drop-shadow-2xl">
+            <div className="relative z-10 p-4 sm:p-6 max-w-4xl mx-auto">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-3 leading-tight drop-shadow-2xl">
                     <span className="text-cyan-400 font-black">آوای نهاوند:</span> راهکارهای جامع کامپیوتری
                 </h1>
-                <p className="text-lg md:text-xl text-gray-100 max-w-3xl mx-auto mb-6 drop-shadow-xl font-medium">
+                <p className="text-base sm:text-lg md:text-xl text-gray-100 max-w-2xl sm:max-w-3xl mx-auto mb-6 drop-shadow-xl font-medium">
                     متخصص در خدمات سخت‌افزار، نرم‌افزار، طراحی وب و مشاوره فناوری برای کسب‌و‌کار و افراد
                 </p>
-                <div className="flex justify-center gap-4">
-                    <button onClick={() => navigate('/order')} className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-cyan-500/50 ring-4 ring-cyan-500/30 hover:ring-teal-500/30 relative z-20 animate-pulse-glow">
+                <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                    <button onClick={() => navigate('/order')} className="bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white font-bold py-3 px-6 sm:py-4 sm:px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl shadow-cyan-500/50 ring-4 ring-cyan-500/30 hover:ring-teal-500/30 relative z-20 animate-pulse-glow w-full sm:w-auto">
                         ثبت سفارش آنلاین
                     </button>
-                    <a href="#services" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 relative z-20">
+                    <a href="#services" className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-300 transform hover:scale-105 relative z-20 w-full sm:w-auto text-center sm:text-left">
                         مشاهده خدمات
                     </a>
                 </div>
