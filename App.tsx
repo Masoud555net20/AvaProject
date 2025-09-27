@@ -1,18 +1,19 @@
 
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Portfolio from './components/Portfolio';
-import Testimonials from './components/Testimonials';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
-import OrderPage from './pages/OrderPage';
 import Marquee from './components/Marquee';
 import AnimatedWaves from './components/AnimatedWaves'; // Import the new component
+
+const About = lazy(() => import('./components/About'));
+const Services = lazy(() => import('./components/Services'));
+const Portfolio = lazy(() => import('./components/Portfolio'));
+const Testimonials = lazy(() => import('./components/Testimonials'));
+const Contact = lazy(() => import('./components/Contact'));
+const OrderPage = lazy(() => import('./pages/OrderPage'));
 
 const HomePage: React.FC = () => {
   return (
@@ -22,11 +23,13 @@ const HomePage: React.FC = () => {
       <Marquee />
       <main className="relative z-10"> {/* Ensure main content is above waves */}
         <Hero />
-        <About />
-        <Services />
-        <Portfolio />
-        <Testimonials />
-        <Contact />
+        <Suspense fallback={<div className="py-20 text-center">Loading sections...</div>}>
+          <About />
+          <Services />
+          <Portfolio />
+          <Testimonials />
+          <Contact />
+        </Suspense>
       </main>
       <Footer />
       <ChatWidget />
@@ -39,7 +42,11 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/order" element={<OrderPage />} />
+        <Route path="/order" element={
+          <Suspense fallback={<div className="py-20 text-center">Loading...</div>}>
+            <OrderPage />
+          </Suspense>
+        } />
       </Routes>
     </Router>
   );

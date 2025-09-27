@@ -110,7 +110,6 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         className="flex items-center gap-3 hover:opacity-80 transition-opacity"
                     >
                         <img src="./Ava.png?v=2" alt="آوای نهاوند لوگو" className="h-12 w-auto logo-color-filter" />
-                        <span className="text-xl font-bold text-white tracking-wider">آوای نهاوند</span>
                     </button>
                     <button 
                         onClick={() => navigate('/')}
@@ -125,10 +124,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             <main className="py-20">
                 <div className="container mx-auto px-6">
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 drop-shadow-lg leading-tight">
                             <span className="text-cyan-500 font-black">ثبت سفارش آنلاین</span>
                         </h1>
-                        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                        <p className="text-sm sm:text-base md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
                             برای دریافت مشاوره یا ثبت سفارش، فرم زیر را تکمیل کنید. کارشناسان ما به زودی با شما تماس خواهند گرفت.
                         </p>
                     </div>
