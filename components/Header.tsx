@@ -15,8 +15,8 @@ const Header: React.FC = () => {
         <header className="bg-slate-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-cyan-500/10">
             <div className="container mx-auto px-6 py-3 flex justify-between items-center">
                 <a href="#home" className="flex items-center gap-2">
-                   <img src="/Ava.png" alt="آوای نهاوند لوگو" className="h-10 md:h-16 w-auto logo-color-filter" />
-                    <span className="text-sm md:text-base font-bold text-white tracking-wider animate-cyan-glow-text">با آوای نهاوند، کنار هم یاد می‌گیریم، می‌سازیم و پیشرفت می‌کنیم</span>
+                   <img src="/Ava.png" alt="آوای نهاوند لوگو" className="h-12 md:h-20 w-auto logo-color-filter" />
+                    <span className="text-[4px] font-bold text-white tracking-wider animate-cyan-glow-text">کنار هم یاد می‌گیریم، می‌سازیم و پیشرفت می‌کنیم</span>
                 </a>
                 <nav className="hidden md:flex items-center space-x-reverse space-x-6">
                     {navLinks.map(link => (
